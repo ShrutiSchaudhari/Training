@@ -21,7 +21,8 @@ public class MyDemoLoggingAspect {
 	//@Before("execution( * add*(com.SpringAOP.AOPDemo.Account, ..))")
 	
 	//@Before("execution( * add*(Account))")//gives error of invalidabolutetypename
-	@Before("execution( * add*(..))")
+	//@Before("execution( * add* (..))")
+	@Before("execution( * com.SpringAOP.AOPDemo.DAO.*.*(..))")
 	public void beforeAddAccountAdvice() {
 		
 		System.out.println("\n------>> excecuting @Before advice on method");

@@ -31,7 +31,7 @@ public class AopDemoApplication {
 		
 		System.out.println("\n account \n");
 		theAccountDAO.addAccount(myAccount, true);
-		
+		theAccountDAO.doWork();
 		//do it again!
 		
 		System.out.println("\n membership \n");
@@ -39,6 +39,7 @@ public class AopDemoApplication {
 		//call the bussiness method again
 		
 		theMembershipDAO.addSillyMember();
+		theMembershipDAO.goToSleep();
 		}
 	
 }
