@@ -35,12 +35,32 @@ public class MyDemoLoggingAspect {
 		long begin = System.currentTimeMillis();
 		
 		//execute method
-		Object result = theProceedingJoinPoint.proceed();
+		//this method can throw exception , surround it it with try catch
+		
+		//Object result = theProceedingJoinPoint.proceed();
+		
+		Object result = null;
+		 try {
+			 result = theProceedingJoinPoint.proceed();
+		} catch (Exception e) {
+			
+			//log the exception 
+			System.out.println(e.getMessage());
+			
+			//RETHROW THE EXCEPTION
+			throw e;
+
+			//give user custom message
+			//result = "Major Accident! but no problem , your private AOP HELICOPTER IS ARRIVING";
+		}
+		
 		//get end time stamp
-		
+		long end = System.currentTimeMillis();
+				
 		//compute duration and display it
-		
-				return null;
+		long duration = end - begin;
+		System.out.println("\n--------->> Duration "+ duration/1000.0 + "  seconds");
+				return result;
 		
 	}
 			
