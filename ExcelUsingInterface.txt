@@ -1,0 +1,55 @@
+If you want to continuously process rows from an Excel file without storing them in a list, you can modify your code to accept an interface as a parameter and process each row as it's read from the Excel file. This allows you to achieve a streaming-like behavior without loading all rows into memory. Here's an example of how you can do this:
+
+First, define an interface for processing rows:
+
+```java
+public interface RowProcessor {
+    void processRow(Row row);
+}
+```
+
+Next, modify your `readTeacherExcel` method to accept an instance of this interface as a parameter:
+
+```java
+public void readTeacherExcel(RowProcessor rowProcessor) throws Exception {
+    try {
+        List<Row> rows = excelread.readExcelRow(teacherFilePath, 0);
+
+        for (Row r : rows) {
+            rowProcessor.processRow(r);
+        }
+
+    } catch (IOException | InvalidFormatException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+Now, you can implement the `RowProcessor` interface to define how you want to process each row. For your specific case, it seems like you want to create and print a `Teacher` object for each row:
+
+```java
+public class TeacherRowProcessor implements RowProcessor {
+    @Override
+    public void processRow(Row row) {
+        Teacher teacher = readTeacherData.processExcelRow(row);
+        System.out.println(teacher);
+    }
+}
+```
+
+Finally, you can call the `readTeacherExcel` method and pass an instance of the `TeacherRowProcessor` class:
+
+```java
+public static void main(String[] args) {
+    YourClass yourClass = new YourClass(); // Create an instance of your class
+    TeacherRowProcessor rowProcessor = new TeacherRowProcessor(); // Create an instance of the row processor
+
+    try {
+        yourClass.readTeacherExcel(rowProcessor);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+
+This approach allows you to process each row one at a time without storing them in a list, making it memory-efficient for large Excel files.
