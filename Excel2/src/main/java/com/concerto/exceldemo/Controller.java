@@ -1,8 +1,6 @@
 package com.concerto.exceldemo;
 
 import java.io.IOException;
-import java.util.List;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,7 @@ public class Controller {
 	
 	@Value("${excel.student.file.path}")
 	private String studentFilePath;
-	private int sheetIndex;
-	private int rowNum;
-	 
+
 	@Autowired
 	ExcelRead excelread;
 	
@@ -32,18 +28,12 @@ public class Controller {
 	ReadTeacherData readTeacherData;
 	 
 	@GetMapping("/teacher")
-	    public void readTeacherExcel() {
+	    public void readTeacherExcel() throws Exception {
 		 try {
 			Row row= excelread.readExcelRow(teacherFilePath,0,1);
 			Teacher teacher = readTeacherData.processExcelRow(row);
 			System.out.println(teacher);
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		} catch (InvalidFormatException e) {
-			
-			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (IOException  | InvalidFormatException  e) {
 			
 			e.printStackTrace();
 		}
