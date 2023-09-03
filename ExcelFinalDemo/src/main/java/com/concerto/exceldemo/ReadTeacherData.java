@@ -12,23 +12,58 @@ import org.springframework.stereotype.Component;
 import com.concerto.exceldemo.model.Teacher;
 
 @Component
-public class ReadTeacherData implements ReadExcelData {
+public class ReadTeacherData implements ExcelProcessor<Teacher> {
 	
        
+//		@Override
+//		public Teacher processExcelRow(Row r) {
+//			
+////		            Teacher teacher = new Teacher();
+////		            teacher.setId(row.getCell(0).getStringCellValue());
+////		            teacher.setName(rows.getCell(1).getStringCellValue());
+////		            teacher.setQualification(rows.getCell(2).getStringCellValue());
+////		           return teacher;
+//			 Teacher teacher = new Teacher();
+//			    DataFormatter dataFormatter = new DataFormatter();
+//
+//			  
+//			        for (int i = 0; i < r.getLastCellNum(); i++) {
+//			            Cell cell = r.getCell(i);
+//
+//			            if (cell != null) {
+//			                String cellValue = dataFormatter.formatCellValue(cell);
+//
+//			                switch (i) {
+//			                    case 0:
+//			                        teacher.setId(cellValue);
+//			                        break;
+//			                    case 1:
+//			                        teacher.setName(cellValue);
+//			                        break;
+//			                    case 2:
+//			                        teacher.setQualification(cellValue);
+//			                        break;
+//			                    // Handle additional columns if needed
+//			                    default:
+//			                        // Handle or ignore other columns as needed
+//			                        break;
+//			                }
+//			            
+//			        }
+//			    }
+//
+//			    return teacher;
+//			}
+
 		@Override
-		public Teacher processExcelRow(Row r) {
+		public Teacher rowProcessor(Row row) {
 			
-//		            Teacher teacher = new Teacher();
-//		            teacher.setId(row.getCell(0).getStringCellValue());
-//		            teacher.setName(rows.getCell(1).getStringCellValue());
-//		            teacher.setQualification(rows.getCell(2).getStringCellValue());
-//		           return teacher;
 			 Teacher teacher = new Teacher();
 			    DataFormatter dataFormatter = new DataFormatter();
 
 			  
-			        for (int i = 0; i < r.getLastCellNum(); i++) {
-			            Cell cell = r.getCell(i);
+			        for (int i = 0; i < row.getLastCellNum(); i++) {
+			            Cell cell = row.getCell(i);
 
 			            if (cell != null) {
 			                String cellValue = dataFormatter.formatCellValue(cell);
@@ -53,15 +88,8 @@ public class ReadTeacherData implements ReadExcelData {
 			    }
 
 			    return teacher;
-			}
-			
-
-
-
-
-
-
-      }
+		}
+			   }
 	
 
 

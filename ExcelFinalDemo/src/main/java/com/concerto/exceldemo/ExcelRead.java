@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExcelRead {
 
-	public  List<Row> readExcelRow(String filePath, int sheetIndex) throws IOException, Exception, InvalidFormatException {
-		 List<Row> rows = new ArrayList<>();
+	public <T> List<T> readExcelRow(String filePath, int sheetIndex,ExcelProcessor<T> dataProcessor) throws IOException, Exception, InvalidFormatException {
+		 List<T> processData = new ArrayList<>();
         FileInputStream fileInputStream = new FileInputStream(filePath);
         Workbook workbook = WorkbookFactory.create(fileInputStream);
         Sheet sheet = workbook.getSheetAt(sheetIndex);
@@ -28,10 +28,15 @@ public class ExcelRead {
                 continue; // Skip the header row
             }
         	
-        	rows.add(row);	
+            T processRow = dataProcessor.rowProcessor(row);
+            System.out.println(processRow);
+            processData.add(processRow);
+//            T processedRow = dataProcessor.rowProcessor(row);
+//            processData.add(processedRow);
+            
         }
         workbook.close();
         fileInputStream.close();
-        return rows;
+        return processData;
     }
 }

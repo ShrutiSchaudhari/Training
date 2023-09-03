@@ -23,19 +23,21 @@ public class Controller {
 	@Value("${excel.student.file.path}")
 	private String studentFilePath;
 
+	//this is the class and creating its instance we can acess its method 
 	@Autowired
 	ExcelRead excelread;
 	
 	@Autowired
 	ReadTeacherData readTeacherData;
+	
+
 	 
 	@GetMapping("/teacher")
 	    public void readTeacherExcel() throws Exception {
 		 try {
-			List<Row> rows= excelread.readExcelRow(teacherFilePath,0);
-			
-			for(Row r : rows) {
-				Teacher teacher = readTeacherData.processExcelRow(r);
+			List<Teacher> teachers= excelread.readExcelRow(teacherFilePath,0,readTeacherData);
+			for (Teacher teacher : teachers) {
+				// Process and return teachers
 				System.out.println(teacher);
 			}
 			
